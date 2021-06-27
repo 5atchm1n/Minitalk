@@ -3,13 +3,14 @@ CNAME = client
 
 INC = minitalk.h
 
-SRC_C = mn_client.c \
-		mn_utils.c
+SRC_C = mn_client.c
 
-SRC_S = mn_server.c \
-		mn_utils.c
+SRC_S = mn_server.c
 
-OBJSDIR = objs
+LIBFT = inc/libft/libft.a
+
+OBJDIR = objs
+SRCDIR = src
 
 CC = clang
 
@@ -24,13 +25,17 @@ DEP = ${OBJS:.o=.d}
 
 all : ${SNAME} ${CNAME}
 
-${SNAME}: ${OBJ_S}
-	${CC} ${CFLAGS} -I./inc -c $< -o $@
+$(SNAME) : ${LIBFT} ${OBJ_S}
+	${CC} ${CFLAGS} ${MEM} ${OBJ_S} ${LIBFT} -o $@
 
-${CNAME}: ${OBJ_C}
-	${CC} ${CFLAGS} -I./inc -c $< -o $@
+$(CNAME): ${LIBFT} ${OBJ_C}
+	${CC} ${CFLAGS} ${MEM} ${OBJ_C} ${LIBFT} -o $@
 
-${OBJDIR}/%.o:src/%.c
+$(LIBFT):
+	make -s -C inc/libft
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@mkdir -p ${@D}
 	${CC} ${CFLAGS} -I./inc -c $< -o $@
 
 re: fclean all
