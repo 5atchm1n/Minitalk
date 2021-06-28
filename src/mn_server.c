@@ -6,7 +6,7 @@
 /*   By: sshakya <sshakya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 15:48:11 by sshakya           #+#    #+#             */
-/*   Updated: 2021/06/28 02:08:21 by sshakya          ###   ########.fr       */
+/*   Updated: 2021/06/28 02:10:13 by sshakya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ static int	mn_error(int error)
 		ft_putstr_fd("Error\n", 1);
 	if (error == 2)
 		ft_putstr_fd("Signal error\n", 1);
-	if (error == 3)
-		ft_putstr_fd("Invalid PID\n", 1);
 	exit (0);
 }
 
