@@ -6,28 +6,39 @@
 /*   By: sshakya <sshakya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 15:48:03 by sshakya           #+#    #+#             */
-/*   Updated: 2021/06/27 20:05:34 by sshakya          ###   ########.fr       */
+/*   Updated: 2021/06/28 02:04:40 by sshakya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
+static int	mn_error(int error)
+{
+	if (error == 1)
+		ft_putstr_fd("Usage : ./client [PID] [message]\n", 1);
+	if (error == 2)
+		ft_putstr_fd("Signal error\n", 1);
+	if (error == 3)
+		ft_putstr_fd("Invalid PID\n", 1);
+	exit (0);
+}
+
 void	mn_ascii(int pid, unsigned char c)
 {
-	uint8_t	byte;
+	uint8_t	bit;
 
-	byte = 1 << 6;
-	while (byte)
+	bit = 1 << 6;
+	while (bit)
 	{
-		if (c & i)
+		if (c & bit)
 		{
-			if (kill(pid, SIGUSR1) == -1)
-				exit (0);
+			if (kill(pid, SIGUSR1) != 0)
+				mn_error(3);
 		}
 		else
-			if (kill(pid, SIGUSR2) == -1)
-				exit (0);
-		i >>= 1;
+			if (kill(pid, SIGUSR2) != 0)
+				mn_error(3);
+		bit >>= 1;
 		usleep(600);
 	}
 }
@@ -59,12 +70,12 @@ int	main(int argc, char **argv)
 {
 	struct sigaction	msg;
 
-	msg.sa_flags = SA_SIGINFO | SA_NODEFER;
+	msg.sa_flags = SA_SIGINFO;
 	msg.sa_sigaction = mn_receipt;
 	if (sigaction(SIGUSR2, &msg, 0) != 0)
-		exit (0);
+		mn_error(2);
 	if (argc != 3)
-		return (0);
+		mn_error(1);
 	mn_message(argv[1], argv[2]);
 	return (0);
 }
