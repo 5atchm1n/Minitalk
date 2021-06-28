@@ -6,7 +6,7 @@
 /*   By: sshakya <sshakya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 15:48:11 by sshakya           #+#    #+#             */
-/*   Updated: 2021/06/28 02:10:13 by sshakya          ###   ########.fr       */
+/*   Updated: 2021/06/28 02:16:07 by sshakya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ int	main(int argc, char **argv)
 	off.sa_sigaction = mn_off;
 	on.sa_flags = SA_SIGINFO;
 	off.sa_flags = SA_SIGINFO;
-	sigaddset(&on.sa_mask, SIGUSR1);
-	sigemptyset(&on.sa_mask);
 	if (sigaction(SIGUSR1, &on, 0) != 0)
 		return (mn_error(2));
 	if (sigaction(SIGUSR2, &off, 0) != 0)
