@@ -1,6 +1,8 @@
 SNAME = server
 CNAME = client
 
+SHELL = bash
+
 INC = minitalk.h
 
 SRC_C = mn_client.c
@@ -38,7 +40,7 @@ $(CNAME): ${LIBFT} ${OBJ_C}
 	${CC} ${CFLAGS} ${MEM} ${OBJ_C} ${LIBFT} -o $@
 
 $(LIBFT):
-	make -s -C inc/libft
+	@make -s -C inc/libft
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p ${@D}
@@ -47,14 +49,16 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 re: fclean all
 
 clean:
-	@echo  "Cleaning objects\c"
+	@echo -ne "Cleaning objects"
 	@rm -rf ${OBJDIR}
-	@echo "\033[32m\t[OK]\033[0m"
+	@echo -e "\033[32m\t\t[OK]\033[0m"
+	@make clean -s -C inc/libft
 
 fclean: clean
-	@echo  "Removing minitalk\c"
+	@echo -ne  "Removing minitalk"
 	@rm -rf ${SNAME} ${CNAME}
-	@echo "\033[32m\t\t[OK]\033[0m"
+	@echo -e "\033[32m\t\t[OK]\033[0m"
+	@make fclean -s -C inc/libft
 
 .PHONY : all clean re fclean
 
