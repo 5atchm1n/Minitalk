@@ -6,7 +6,7 @@
 /*   By: sshakya <sshakya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 15:48:03 by sshakya           #+#    #+#             */
-/*   Updated: 2021/06/28 02:04:40 by sshakya          ###   ########.fr       */
+/*   Updated: 2021/06/29 16:14:35 by sshakya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	mn_ascii(int pid, unsigned char c)
 			if (kill(pid, SIGUSR2) != 0)
 				mn_error(3);
 		bit >>= 1;
-		usleep(600);
+		usleep(TIME);
 	}
 }
 

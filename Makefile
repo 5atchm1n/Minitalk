@@ -18,6 +18,12 @@ CFLAGS = -Wall -Werror -Wextra -g
 MEM = -fsanitize=address
 CFLAGS += -MMD -MP
 
+OS = $(shell uname -s)
+
+ifeq (OS, Linux)
+	CFLAGS += -DOS
+endif
+
 OBJ_C = $(addprefix ${OBJDIR}/,${SRC_C:.c=.o})
 OBJ_S = $(addprefix ${OBJDIR}/,${SRC_S:.c=.o})
 

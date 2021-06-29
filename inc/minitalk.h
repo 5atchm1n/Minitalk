@@ -6,7 +6,7 @@
 /*   By: sshakya <sshakya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 15:52:54 by sshakya           #+#    #+#             */
-/*   Updated: 2021/06/27 20:08:17 by sshakya          ###   ########.fr       */
+/*   Updated: 2021/06/29 16:16:24 by sshakya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,17 @@
 #  define BUFFSIZE 1024
 # endif
 
+# ifdef OS
+#  define TIME 200
+# else 
+#  define TIME 600
+# endif
+
 typedef struct s_mtalk
 {
 	char	msg[BUFFSIZE];
 	int		bit;
-	int		byte;
+	int		index;
 	char	flag;
 }	t_mtalk;
 

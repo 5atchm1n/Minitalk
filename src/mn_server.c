@@ -6,7 +6,7 @@
 /*   By: sshakya <sshakya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 15:48:11 by sshakya           #+#    #+#             */
-/*   Updated: 2021/06/28 02:16:07 by sshakya          ###   ########.fr       */
+/*   Updated: 2021/06/29 15:40:35 by sshakya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	mn_on(int sig, siginfo_t *var, void *param)
 	if (g_message.bit == 0)
 	{
 		g_message.bit = (1 << 6);
-		g_message.byte += 1;
+		g_message.index += 1;
 	}
-	g_message.msg[g_message.byte] += g_message.bit;
+	g_message.msg[g_message.index] += g_message.bit;
 	g_message.bit >>= 1;
-	if (g_message.byte == BUFFSIZE - 2 && g_message.bit == 0)
+	if (g_message.index == BUFFSIZE - 2 && g_message.bit == 0)
 		g_message.flag |= LIMIT;
 }
 
@@ -46,12 +46,12 @@ void	mn_off(int sig, siginfo_t *var, void *param)
 	if (g_message.bit == 0)
 	{
 		g_message.bit = (1 << 6);
-		g_message.byte += 1;
+		g_message.index += 1;
 	}
 	g_message.bit >>= 1;
-	if (g_message.byte == BUFFSIZE - 2 && !g_message.bit)
+	if (g_message.index == BUFFSIZE - 2 && !g_message.bit)
 		g_message.flag |= LIMIT;
-	else if (g_message.msg[g_message.byte] == '\0' && !g_message.bit)
+	else if (g_message.msg[g_message.index] == '\0' && !g_message.bit)
 	{
 		g_message.flag |= DONE;
 		kill(var->si_pid, SIGUSR2);
@@ -67,7 +67,7 @@ int	mn_handler(void)
 		{
 			ft_putstr_fd(g_message.msg, 1);
 			ft_bzero(g_message.msg, BUFFSIZE);
-			g_message.byte = 0;
+			g_message.index = 0;
 			g_message.bit = (1 << 6);
 			if (g_message.flag & DONE)
 				write(1, "\n", 1);
